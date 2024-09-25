@@ -199,7 +199,7 @@
             <a href="index.html">Inicio</a>
             <a href="formulario.jsp">Formulario</a>
             <a href="publicacionBeca.jsp">Publicar Beca</a>
-            <a href="lista_becas.jsp">Lista de Becas</a>
+            <a href="Becas">Lista de Becas</a>
         </div>
         <div class="auth-buttons">
             <a href="login.jsp">Login</a>

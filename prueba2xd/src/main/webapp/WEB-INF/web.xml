@@ -24,6 +24,15 @@
         <servlet-name>CrearBecaServlet</servlet-name>
         <url-pattern>/CrearBecaServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>BecaController</servlet-name>
+        <servlet-class>controller.BecaController</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BecaController</servlet-name>
+        <url-pattern>/Becas</url-pattern>
+    </servlet-mapping>
 
     
     

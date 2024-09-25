@@ -19,7 +19,7 @@ public class BecaDAO {
 
     public List<Beca> getListadoBecas() {
         List<Beca> listaBecas = new ArrayList<>();
-        String strSQL = "SELECT id, titulo, tipo, carrera, descripcion, fecha_inicio, fecha_fin, cupos, porcentaje, genero, nacionalidad, tipo_discapacidad, porcentaje_discapacidad, confirmacion, fecha_creacion FROM becas ORDER BY id";
+        String strSQL = "SELECT * FROM becas ORDER BY id ASC";
 
         try (Connection con = conexionbd.getConnection();
              Statement stm = con.createStatement();
@@ -38,6 +38,7 @@ public class BecaDAO {
                 beca.setPorcentaje(rst.getInt("porcentaje"));
                 beca.setGenero(rst.getString("genero"));
                 beca.setNacionalidad(rst.getString("nacionalidad"));
+                beca.setSoloDiscapacitados(rst.getBoolean("solo_discapacitados"));
                 beca.setTipoDiscapacidad(rst.getString("tipo_discapacidad"));
                 beca.setPorcentajeDiscapacidad(rst.getInt("porcentaje_discapacidad"));
 

@@ -246,6 +246,30 @@
             }
         }
     </style>
+    <script>
+        function cargarMaterias() {
+            const select = document.getElementById('carrera');
+            fetch('MateriaController')
+                .then(response => response.text())
+                        .then(data => {
+                            select.innerHTML += data; // Agrega las opciones al select
+                        })
+                        .catch(error => console.error('Error al cargar las carreras', error));
+            }
+        function cargarTipoBeca() {
+            const select = document.getElementById('tipo');
+            fetch('TipoBecaController')
+                .then(response => response.text())
+                        .then(data => {
+                            select.innerHTML += data; // Agrega las opciones al select
+                        })
+                        .catch(error => console.error('Error al cargar las carreras', error));
+            }
+        window.onload = function () {
+                cargarMaterias(); // Cargar las editoriales al cargar la página
+                cargarTipoBeca();
+            };
+    </script>
     </head>
     <body>
         <div class="navbar">
@@ -257,7 +281,7 @@
                 <a href="index.html">Inicio</a>
                 <a href="formulario.jsp">Formulario</a>
                 <a href="publicacionBeca.jsp">Publicar Beca</a>
-                <a href="lista_becas.jsp">Lista de Becas</a>
+                <a href="Becas">Lista de Becas</a>
             </div>
             <div class="auth-buttons">
                 <a href="login.jsp">Login</a>
@@ -276,14 +300,6 @@
                     <label for="tipo">Tipo de Beca:</label>
                     <select id="tipo" name="tipo" required>
                         <option value="" disabled selected>Seleccione el tipo de Beca</option>
-                        <option value="Academica">Excelencia Académica</option>
-                        <option value="Deportiva">Becas Deportivas</option>
-                        <option value="Economica">Becas de Necesidad Económica</option>
-                        <option value="Internacional">Becas Internacionales</option>
-                        <option value="Minorias">Becas para Minorías Sociales</option>
-                        <option value="Empresas">Becas de Empresa</option>
-                        <option value="Gobernamental">Becas de Programas Gubernamentales</option>
-                        <option value="Sin Lucro">Becas de Programa Sin Fines de Lucro</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -294,13 +310,6 @@
                     <label for="carrera">Carrera a la que aplica esta Beca:</label>
                     <select id="carrera" name="carrera" required>
                         <option value="" disabled selected>Seleccione la carrera</option>
-                        <option value="carreras">Todas Las Carreras</option>
-                        <option value="ingenieria">Ingeniería</option>
-                        <option value="medicina">Medicina</option>
-                        <option value="derecho">Derecho</option>
-                        <option value="ciencias_sociales">Ciencias Sociales</option>
-                        <option value="artes">Artes</option>
-                        <option value="negocios">Negocios</option>
                     </select>
                 </div>
                 <div class="form-group">
