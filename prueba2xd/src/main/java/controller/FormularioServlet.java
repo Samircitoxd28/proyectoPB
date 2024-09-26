@@ -82,7 +82,7 @@ public class FormularioServlet extends HttpServlet {
 
             int rowsInserted = stmt.executeUpdate();
             if (rowsInserted > 0) {
-                response.sendRedirect("index.html");
+                response.sendRedirect("index.jsp");
             } else {
                 response.sendRedirect("perfil1.jsp");
             }

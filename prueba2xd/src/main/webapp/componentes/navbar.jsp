@@ -28,7 +28,7 @@
         </div>
         <div class="auth-buttons">
             <a href="login.jsp">Login</a>
-            <a href="register.jsp">Registrar</a>
+            <a href="perfil1.jsp">perfil</a>
         </div>
     </div>
     </body>

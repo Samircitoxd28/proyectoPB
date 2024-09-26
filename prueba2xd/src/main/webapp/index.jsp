@@ -27,7 +27,7 @@
             align-items: center;
             text-align: center;
             padding: 80px 20px;
-            background-image: url('https://img3.wallspic.com/crops/6/7/1/1/5/151176/151176-el_norte_de_bosques_de_madera_dura-canon_de_la_pistola-entorno_natural-helecho-bosque-7680x4320.jpg');
+            background-image: url('https://images.unsplash.com/photo-1529390079861-591de354faf5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZWR1Y2F0aW9ufGVufDB8fDB8fHww');
             background-size: cover;
             background-position: center;
             color: white;
