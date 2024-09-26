@@ -32,6 +32,7 @@ public class BecaController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
+        
     response.setContentType("text/html;charset=UTF-8");
     
     try (PrintWriter out = response.getWriter()) {
@@ -41,22 +42,28 @@ public class BecaController extends HttpServlet {
         if (paginaParam != null) {
             paginaActual = Integer.parseInt(paginaParam);
         }
-        
+
+        String titulo = request.getParameter("titulo") != null ? request.getParameter("titulo") : "";
+        String tipo = request.getParameter("tipo") != null ? request.getParameter("tipo") : "";
+        String carrera = request.getParameter("carrera") != null ? request.getParameter("carrera") : "";
+        Integer porcentaje = request.getParameter("porcentaje") != null && !request.getParameter("porcentaje").isEmpty() ? Integer.parseInt(request.getParameter("porcentaje")) : null;
+        String genero = request.getParameter("genero") != null ? request.getParameter("genero") : "";
+        String nacionalidad = request.getParameter("nacionalidad") != null ? request.getParameter("nacionalidad") : "";
+        Boolean soloDiscapacitados = request.getParameter("discapacitados") != null;
+
         // Crear una instancia de BecaDAO
         BecaDAO becaDAO = new BecaDAO();
-        
+
         // Obtener el total de becas
-        int totalBecas = becaDAO.contarBecas();
-        
-        // Obtener la lista de becas desde el DAO
-        List<Beca> listaBecas = becaDAO.getListadoBecas(paginaActual, BECAS_POR_PAGINA);
-        
+        int totalBecas = becaDAO.contarBecas(titulo, tipo, carrera, porcentaje, genero, nacionalidad, soloDiscapacitados);
+        List<Beca> listaBecas = becaDAO.getListadoBecas(paginaActual, BECAS_POR_PAGINA, titulo, tipo, carrera, porcentaje, genero, nacionalidad, soloDiscapacitados);
+
         // Configurar la lista de becas como atributo de la solicitud
         request.setAttribute("listadoBecas", listaBecas);
         request.setAttribute("totalBecas", totalBecas);
         request.setAttribute("paginaActual", paginaActual);
         request.setAttribute("paginasTotales", (int) Math.ceil((double) totalBecas / BECAS_POR_PAGINA));
-        
+
         // Redirigir a la página JSP con la lista de becas
         request.getRequestDispatcher("/lista_becas.jsp").forward(request, response);
     }

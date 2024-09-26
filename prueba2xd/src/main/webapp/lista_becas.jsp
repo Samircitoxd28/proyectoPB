@@ -99,9 +99,9 @@
         }
 
         .container {
+            display: flex;
+            margin-top: 100px; /* Asegura que el contenido no se superponga con la barra de navegación */
             padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
         /* Estilo de tarjeta */
@@ -204,6 +204,59 @@
             font-weight: bold;
             color: #00796b;
         }
+
+        .filter-container {
+            position: sticky; /* Mantiene el contenedor de filtros visible al hacer scroll */
+            top: 20px; /* Espacio desde la parte superior */
+            width: 250px; /* Ancho del contenedor de filtros */
+            height: 560px; /* Altura del contenedor de filtros */
+            padding: 45px; /* Espaciado interno */
+            padding-top: 80px; /* Espacio adicional en la parte superior para el título */
+            background-color: white; /* Fondo blanco para el contenedor de filtros */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para dar profundidad */
+            margin-right: 20px; /* Espacio entre filtros y resultados */
+            margin-top: 100px;
+        }
+
+        .results {
+            flex-grow: 1; /* Ocupa el resto del espacio disponible */
+            padding: 20px;
+        }
+
+        h2 {
+            color: #00796b; /* Color del título de filtros */
+        }
+
+        .filter-container label,
+        .filter-container input,
+        .filter-container select {
+            width: 100%; /* Ocupa todo el ancho del contenedor */
+            margin-top: 10px; /* Espacio entre elementos */
+        }
+
+        .filter-container input,
+        .filter-container select {
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #00796b;
+            border-radius: 4px;
+        }
+
+        .filter-container button {
+            padding: 8px 16px;
+            background-color: #00796b;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px; /* Espacio superior para el botón */
+        }
+
+        .filter-container button:hover {
+            background-color: #004d40; /* Color del botón al pasar el ratón */
+        }
     </style>
 </head>
 <body>
@@ -224,48 +277,90 @@
         </div>
     </div>
     <div class="container">
-        <h1>Listado de Becas Disponibles</h1>
-        <p class="total-becas">Total de Becas: ${totalBecas}</p>
-        <c:forEach var="beca" items="${listadoBecas}">
-            <div class="beca-card">
-                <div class="image-container">
-                    <img src="https://via.placeholder.com/150" alt="Imagen de la Beca"> <!-- Imagen de ejemplo -->
-                </div>
-                <div>
-                    <h2>${beca.titulo}</h2>
-                    <div class="details">
-                        <div><strong>Tipo:</strong> ${beca.tipo}</div>
-                        <div><strong>Carrera:</strong> ${beca.carrera}</div>
-                        <div><strong>Fecha Inicio:</strong> ${beca.fechaInicio}</div>
-                        <div><strong>Fecha Fin:</strong> ${beca.fechaFin}</div>
-                        <div><strong>Cupos:</strong> ${beca.cupos}</div>
-                        <div><strong>Porcentaje:</strong> ${beca.porcentaje}%</div>
-                        <div><strong>Género:</strong> ${beca.genero}</div>
-                        <div><strong>Nacionalidad:</strong> ${beca.nacionalidad}</div>
+        <div class="filter-container">
+            <h2>Filtros</h2>
+            <form method="GET" action="Becas">
+                <label for="titulo">Título:</label>
+                <input type="text" name="titulo" id="titulo" placeholder="Buscar por título" />
+
+                <label for="tipo">Tipo:</label>
+                <select name="tipo" id="tipo">
+                    <option value="">Seleccionar...</option>
+                    <option value="Académica">Académica</option>
+                    <option value="Deportiva">Deportiva</option>
+                </select>
+
+                <label for="carrera">Carrera:</label>
+                <select name="carrera" id="carrera">
+                    <option value="">Seleccionar...</option>
+                    <option value="Ingeniería">Ingeniería</option>
+                    <option value="Educación Física">Educación Física</option>
+                </select>
+
+                <label for="porcentaje">Porcentaje:</label>
+                <input type="number" name="porcentaje" id="porcentaje" placeholder="Porcentaje mínimo" />
+
+                <label for="genero">Género:</label>
+                <select name="genero" id="genero">
+                    <option value="">Seleccionar...</option>
+                    <option value="Hombres">Hombres</option>
+                    <option value="Mujeres">Mujeres</option>
+                    <option value="Todos">Todos</option>
+                </select>
+
+                <label for="nacionalidad">Nacionalidad:</label>
+                <input type="text" name="nacionalidad" id="nacionalidad" placeholder="Nacionalidad" />
+
+                <label for="discapacitados">Solo Discapacitados:</label>
+                <input type="checkbox" name="discapacitados" id="discapacitados" value="1" />
+
+                <button type="submit">Filtrar</button>
+            </form>
+        </div>
+        <div class="results">
+            <h1>Listado de Becas Disponibles</h1>
+            <p class="total-becas">Total de Becas: ${totalBecas}</p>
+            <c:forEach var="beca" items="${listadoBecas}">
+                <div class="beca-card">
+                    <div class="image-container">
+                        <img src="https://via.placeholder.com/150" alt="Imagen de la Beca">
                     </div>
-                    <p class="description"><strong>Descripción:</strong> ${beca.descripcion}</p>
-                    <div class="apply-button">
-                        <a href="#">Postular</a>
+                    <div>
+                        <h2>${beca.titulo}</h2>
+                        <div class="details">
+                            <div><strong>Tipo:</strong> ${beca.tipo}</div>
+                            <div><strong>Carrera:</strong> ${beca.carrera}</div>
+                            <div><strong>Fecha Inicio:</strong> ${beca.fechaInicio}</div>
+                            <div><strong>Fecha Fin:</strong> ${beca.fechaFin}</div>
+                            <div><strong>Cupos:</strong> ${beca.cupos}</div>
+                            <div><strong>Porcentaje:</strong> ${beca.porcentaje}%</div>
+                            <div><strong>Género:</strong> ${beca.genero}</div>
+                            <div><strong>Nacionalidad:</strong> ${beca.nacionalidad}</div>
+                            <div><strong>Discapacidad:</strong> ${beca.soloDiscapacitados}</div>
+                        </div>
+                        <p class="description"><strong>Descripción:</strong> ${beca.descripcion}</p>
+                        <div class="apply-button">
+                            <a href="#">Postular</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
-        <!-- Paginación -->
-        <div class="pagination">
-            <c:if test="${paginaActual > 1}">
-                <a href="Becas?pagina=${paginaActual - 1}">Anterior</a>
-            </c:if>
-            <c:forEach var="i" begin="1" end="${paginasTotales}">
-                <c:if test="${i == paginaActual}">
-                    <strong>${i}</strong>
-                </c:if>
-                <c:if test="${i != paginaActual}">
-                    <a href="Becas?pagina=${i}">${i}</a>
-                </c:if>
             </c:forEach>
-            <c:if test="${paginaActual < paginasTotales}">
-                <a href="Becas?pagina=${paginaActual + 1}">Siguiente</a>
-            </c:if>
+            <div class="pagination">
+                <c:if test="${paginaActual > 1}">
+                    <a href="Becas?pagina=${paginaActual - 1}">Anterior</a>
+                </c:if>
+                <c:forEach var="i" begin="1" end="${paginasTotales}">
+                    <c:if test="${i == paginaActual}">
+                        <strong>${i}</strong>
+                    </c:if>
+                    <c:if test="${i != paginaActual}">
+                        <a href="Becas?pagina=${i}">${i}</a>
+                    </c:if>
+                </c:forEach>
+                <c:if test="${paginaActual < paginasTotales}">
+                    <a href="Becas?pagina=${paginaActual + 1}">Siguiente</a>
+                </c:if>
+            </div>
         </div>
     </div>
 </body>
