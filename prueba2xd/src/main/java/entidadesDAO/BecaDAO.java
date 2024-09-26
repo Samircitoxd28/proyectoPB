@@ -7,8 +7,8 @@ package entidadesDAO;
 import entidades.Beca;
 import conexion.conexionbd;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +17,17 @@ import java.util.List;
  */
 public class BecaDAO {
 
-    public List<Beca> getListadoBecas() {
+    // Método para obtener la lista de becas con paginación
+    public List<Beca> getListadoBecas(int pagina, int cantidad) {
         List<Beca> listaBecas = new ArrayList<>();
-        String strSQL = "SELECT * FROM becas ORDER BY id ASC";
+        String strSQL = "SELECT * FROM becas ORDER BY id ASC LIMIT ? OFFSET ?";
 
         try (Connection con = conexionbd.getConnection();
-             Statement stm = con.createStatement();
-             ResultSet rst = stm.executeQuery(strSQL)) {
+             PreparedStatement pst = con.prepareStatement(strSQL)) {
+
+            pst.setInt(1, cantidad);
+            pst.setInt(2, (pagina - 1) * cantidad);
+            ResultSet rst = pst.executeQuery();
 
             while (rst.next()) {
                 Beca beca = new Beca();
@@ -49,5 +53,23 @@ public class BecaDAO {
             return new ArrayList<>();
         }
         return listaBecas;
+    }
+
+    // Método para contar el total de becas
+    public int contarBecas() {
+        int total = 0;
+        String strSQL = "SELECT COUNT(*) FROM becas";
+
+        try (Connection con = conexionbd.getConnection();
+             PreparedStatement pst = con.prepareStatement(strSQL);
+             ResultSet rst = pst.executeQuery()) {
+
+            if (rst.next()) {
+                total = rst.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 }

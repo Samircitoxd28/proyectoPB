@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Listado de Becas</title>
-      <style>
+    <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #e0f7fa;
@@ -15,17 +15,17 @@
         }
         /* Barra de navegación */
         .navbar {
-            position: fixed; /* Fija la barra de navegación en la parte superior */
-            top: 0; /* Posición en la parte superior */
+            position: fixed;
+            top: 0;
             left: 0;
-            width: 100%; /* Asegura que ocupe todo el ancho de la página */
+            width: 100%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: linear-gradient(to right, #004d40, #00796b);
             padding: 15px 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000; /* Asegura que quede por encima de otros elementos */
+            z-index: 1000;
         }
 
         .navbar .logo {
@@ -34,7 +34,7 @@
         }
 
         .navbar .logo img {
-            height: 80px; /* Aumentado de 50px a 80px */
+            height: 80px;
             margin-right: 15px;
             border-radius: 50%;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -62,18 +62,6 @@
             transition: color 0.3s;
         }
 
-        .navbar .nav-links a::after {
-            content: "";
-            position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 3px;
-            background-color: #ffffff;
-            transform: scaleX(0);
-            transition: transform 0.3s;
-            transform-origin: bottom right;
-        }
         .navbar .auth-buttons {
             display: flex;
             gap: 15px;
@@ -83,28 +71,31 @@
             transform: scaleX(1);
             transform-origin: bottom left;
         }
-        
-        .navbar .auth-buttons a:hover {
-            background-color: #ffffff;
-            color: #004d40;
-        }
 
         .navbar .auth-buttons a {
             padding: 10px 20px;
             border: 2px solid #ffffff;
             border-radius: 25px;
-            margin-right: 20px;
             color: #ffffff;
             background-color: transparent;
             font-weight: 600;
             font-size: 16px;
             transition: background-color 0.3s, color 0.3s;
         }
-        
+
         h1 {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 100px; /* Aumentar el margen superior para evitar la superposición con la barra de navegación */
             color: #00796b;
+            font-size: 32px; /* Aumentar el tamaño de la fuente */
+        }
+
+        .total-becas {
+            text-align: center;
+            font-size: 20px; /* Tamaño de fuente más grande para mayor visibilidad */
+            margin: 10px 0; /* Espaciado superior e inferior */
+            color: #004d40; /* Color contrastante */
+            font-weight: bold; /* Negrita para destacar */
         }
 
         .container {
@@ -122,8 +113,8 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             border: 1px solid #b2ebf2;
             transition: transform 0.3s ease;
-            display: flex; /* Cambiado a flex para imagen al lado */
-            align-items: center; /* Alineación vertical centrada */
+            display: flex;
+            align-items: center;
         }
 
         .beca-card:hover {
@@ -136,7 +127,7 @@
         }
 
         .beca-card .image-container img {
-            max-width: 150px; /* Tamaño máximo de la imagen */
+            max-width: 150px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -187,6 +178,32 @@
         .beca-card .apply-button a:hover {
             background-color: #004d40;
         }
+
+        /* Estilo de paginación */
+        .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            padding: 10px 15px;
+            background-color: #00796b;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination a:hover {
+            background-color: #004d40;
+        }
+
+        .pagination strong {
+            margin: 0 5px;
+            font-weight: bold;
+            color: #00796b;
+        }
     </style>
 </head>
 <body>
@@ -208,6 +225,7 @@
     </div>
     <div class="container">
         <h1>Listado de Becas Disponibles</h1>
+        <p class="total-becas">Total de Becas: ${totalBecas}</p>
         <c:forEach var="beca" items="${listadoBecas}">
             <div class="beca-card">
                 <div class="image-container">
@@ -232,6 +250,23 @@
                 </div>
             </div>
         </c:forEach>
+        <!-- Paginación -->
+        <div class="pagination">
+            <c:if test="${paginaActual > 1}">
+                <a href="Becas?pagina=${paginaActual - 1}">Anterior</a>
+            </c:if>
+            <c:forEach var="i" begin="1" end="${paginasTotales}">
+                <c:if test="${i == paginaActual}">
+                    <strong>${i}</strong>
+                </c:if>
+                <c:if test="${i != paginaActual}">
+                    <a href="Becas?pagina=${i}">${i}</a>
+                </c:if>
+            </c:forEach>
+            <c:if test="${paginaActual < paginasTotales}">
+                <a href="Becas?pagina=${paginaActual + 1}">Siguiente</a>
+            </c:if>
+        </div>
     </div>
 </body>
 </html>

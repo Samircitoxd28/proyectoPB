@@ -168,12 +168,26 @@
             transition: all 0.3s ease;
         }
 
+        /* Campos obligatorios */
+        .form-group input[required]:valid,
+        .form-group select[required]:valid,
+        .form-group textarea[required]:valid {
+            background-color: #b2ebf2; /* Celeste cuando es válido */
+        }
+        
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
             border-color: #00796b;
             background-color: #e0f2f1;
             outline: none;
+        }
+
+        /* Campos no obligatorios */
+        .form-group input:not([required]),
+        .form-group select:not([required]),
+        .form-group textarea:not([required]) {
+            background-color: white; /* Mantener los no obligatorios en blanco */
         }
 
         .form-group input[type="file"] {
@@ -236,6 +250,20 @@
             color: #00796b;
         }
 
+        /* Leyenda de colores */
+        .legend {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e0f7fa;
+            border-left: 5px solid #00796b;
+            color: #004d40;
+            font-size: 14px;
+        }
+
+        .legend span {
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .navbar {
                 font-size: 12px;
@@ -291,6 +319,10 @@
         <div class="container">
             <h2>Publicar Beca</h2>
             <form action="CrearBecaServlet" method="post">
+                <div class="legend">
+                    <p><span>Nota:</span> Los campos obligatorios se resaltarán en color celeste una vez que hayan sido completados.</p>
+                </div>
+                <br>
                 <!-- Información Personal -->
                 <div class="form-group">
                     <label for="titulo">Título de la Beca:</label>

@@ -21,7 +21,7 @@ import java.util.List;
  */
 @WebServlet(name = "BecaController", urlPatterns = {"/BecaController"})
 public class BecaController extends HttpServlet {
-
+    private static final int BECAS_POR_PAGINA = 10; // Número de becas por página
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      *
@@ -33,15 +33,29 @@ public class BecaController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
     response.setContentType("text/html;charset=UTF-8");
+    
     try (PrintWriter out = response.getWriter()) {
+        
+        int paginaActual = 1;
+        String paginaParam = request.getParameter("pagina");
+        if (paginaParam != null) {
+            paginaActual = Integer.parseInt(paginaParam);
+        }
+        
         // Crear una instancia de BecaDAO
         BecaDAO becaDAO = new BecaDAO();
         
+        // Obtener el total de becas
+        int totalBecas = becaDAO.contarBecas();
+        
         // Obtener la lista de becas desde el DAO
-        List<Beca> listaBecas = becaDAO.getListadoBecas();
+        List<Beca> listaBecas = becaDAO.getListadoBecas(paginaActual, BECAS_POR_PAGINA);
         
         // Configurar la lista de becas como atributo de la solicitud
         request.setAttribute("listadoBecas", listaBecas);
+        request.setAttribute("totalBecas", totalBecas);
+        request.setAttribute("paginaActual", paginaActual);
+        request.setAttribute("paginasTotales", (int) Math.ceil((double) totalBecas / BECAS_POR_PAGINA));
         
         // Redirigir a la página JSP con la lista de becas
         request.getRequestDispatcher("/lista_becas.jsp").forward(request, response);
