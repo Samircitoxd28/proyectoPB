@@ -49,7 +49,7 @@ public class validarlogin extends HttpServlet {
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         // Usuario autenticado con éxito, redirige a index.html
-                        response.sendRedirect("index.html");
+                        response.sendRedirect("index.jsp");
                     } else {
                         // Credenciales incorrectas, enviar un mensaje de error
                         response.getWriter().println("Usuario o contraseña incorrectos.");

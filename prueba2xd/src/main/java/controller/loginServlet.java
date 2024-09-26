@@ -43,7 +43,7 @@ public class loginServlet extends HttpServlet {
                     session.setAttribute("usuario", usuario);
                     
                     // Redirige al perfil del usuario
-                    response.sendRedirect("index.html");
+                    response.sendRedirect("index.jsp");
                 } else {
                     // Credenciales incorrectas
                     response.getWriter().println("Credenciales incorrectas.");
